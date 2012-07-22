@@ -1,7 +1,6 @@
 require "test_helper"
 
 class DealbaseText::ExtractorTest < MiniTest::Unit::TestCase
-  include DealbaseText::Extractor
 
   CONFORMANCE_DIR = File.expand_path("../../", __FILE__)
 
@@ -24,11 +23,11 @@ class DealbaseText::ExtractorTest < MiniTest::Unit::TestCase
     end
   end
   def_conformance_test(:mentions) do
-    assert_equal expected, extract_mentioned_screen_names(text), description
+    assert_equal expected, DealbaseText::Extractor.new(text).screen_names, description
   end
 
   def_conformance_test(:mentions_with_indices) do
     e = expected.map{|elem| elem.inject({}){|h, (k,v)| h[k.to_sym] = v; h} }
-    assert_equal e, extract_mentioned_screen_names_with_indices(text), description
+    assert_equal e, DealbaseText::Extractor.new(text).screen_names_with_indices, description
   end
 end

@@ -1,20 +1,24 @@
 # encoding: utf-8
 module DealbaseText
-  module Extractor
+  class Extractor
+    attr_accessor :text
 
+    def initialize(text)
+      self.text = text
+    end
 
     # stolen from https://github.com/twitter/twitter-text-rb/blob/master/lib/twitter-text/extractor.rb
-    def extract_mentioned_screen_names(text, &block) # :yields: username
-      screen_names = extract_mentioned_screen_names_with_indices(text).map{|m| m[:screen_name]}
-      screen_names.each(&block) if block_given?
-      screen_names
+    def screen_names(&block) # :yields: username
+      @screen_names = screen_names_with_indices.map{|m| m[:screen_name]}
+      @screen_names.each(&block) if block_given?
+      @screen_names
     end
     # stolen from https://github.com/twitter/twitter-text-rb/blob/master/lib/twitter-text/extractor.rb
-    def extract_mentioned_screen_names_with_indices(text)
-      return [] unless text
+    def screen_names_with_indices
+      return [] unless self.text
 
       possible_entries = []
-      text.to_s.scan(DealbaseText::Regex[:valid_mention]) do |before, at, screen_name|
+      self.text.to_s.scan(DealbaseText::Regex[:valid_mention]) do |before, at, screen_name|
         match_data = $~
         after = $'
         unless after =~ DealbaseText::Regex[:end_mention_match]
