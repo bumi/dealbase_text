@@ -4,8 +4,8 @@ require File.expand_path('../lib/dealbase_text/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Michael Bumann"]
   gem.email         = ["michael@railslove.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{dealbase text extractor}
+  gem.summary       = %q{extracts dealbase related text information from a given text}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
